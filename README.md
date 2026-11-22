@@ -57,7 +57,7 @@ Accompanied by a bespoke, editorial web portal designed with an **Apple-grade wa
                             ▼
 ┌────────────────────────────────────────────────────────┐
 │       SINGLE-TENANT CLOUD GATEWAY (Azure Korea)        │
-│       Host: 20-41-107-22.sslip.io (20.41.107.22)       │
+│       Location: Seoul, South Korea (Managed Cloud Node)│
 │                                                        │
 │  ┌──────────────────────────────────────────────────┐  │
 │  │ Stunnel 5.72 Ingress (Port 443)                  │  │

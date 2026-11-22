@@ -90,24 +90,24 @@ export default function AboutPage() {
               <span className="text-charcoal font-semibold">Microsoft Azure (Korea Central Zone 1)</span>
             </div>
             <div className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-border-light">
-              <span className="text-charcoal-faint">Public Endpoint</span>
-              <span className="text-charcoal font-semibold">20-41-107-22.sslip.io (20.41.107.22)</span>
+              <span className="text-charcoal-faint">Deployment Node</span>
+              <span className="text-charcoal font-semibold">Seoul Cloud Node · Active</span>
             </div>
             <div className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-border-light">
               <span className="text-charcoal-faint">Active Port & Protocol</span>
-              <span className="text-charcoal font-semibold">Port 443 · Stunnel 5.72 / TLS 1.3</span>
+              <span className="text-charcoal font-semibold">Port 443 · TLS 1.3 Encapsulation</span>
             </div>
             <div className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-border-light">
               <span className="text-charcoal-faint">Proxy Core</span>
-              <span className="text-charcoal font-semibold">Squid 6.14 (Basic NCSA Auth)</span>
+              <span className="text-charcoal font-semibold">Squid 6.14 (Authenticated Egress)</span>
             </div>
             <div className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-border-light">
               <span className="text-charcoal-faint">SSL Certificate</span>
-              <span className="text-emerald-deep font-bold">Let&apos;s Encrypt Authority (Auto-Renewed)</span>
+              <span className="text-emerald-deep font-bold">Let&apos;s Encrypt Authority (Verified)</span>
             </div>
             <div className="flex flex-col sm:flex-row sm:justify-between py-1">
               <span className="text-charcoal-faint">DNS Resolver</span>
-              <span className="text-charcoal font-semibold">Azure Internal (168.63.129.16)</span>
+              <span className="text-charcoal font-semibold">Private Cloud Virtual DNS (IPv4-First)</span>
             </div>
           </div>
         </div>
@@ -130,7 +130,7 @@ export default function AboutPage() {
             </p>
             <ol className="list-decimal pl-5 space-y-3 pt-2">
               <li>
-                <strong>Browser Proxy Rule:</strong> The extension configures Chromium&apos;s native <code className="text-xs bg-ivory-200 px-1.5 py-0.5 rounded text-charcoal">chrome.proxy</code> subsystem to route all web traffic through an HTTPS proxy at <code className="text-xs bg-ivory-200 px-1.5 py-0.5 rounded text-charcoal">https://20-41-107-22.sslip.io:443</code>.
+                <strong>Browser Proxy Rule:</strong> The extension configures Chromium&apos;s native <code className="text-xs bg-ivory-200 px-1.5 py-0.5 rounded text-charcoal">chrome.proxy</code> subsystem to route web traffic securely through an authenticated HTTPS gateway on port 443 (<code className="text-xs bg-ivory-200 px-1.5 py-0.5 rounded text-charcoal">TLS 1.3 / Port 443</code>).
               </li>
               <li>
                 <strong>Alt-Svc Dynamic Suppression:</strong> Chromium extensions normally only proxy TCP. Media services like Instagram attempt to break out onto raw UDP/QUIC streams, which trigger campus blocks. The extension dynamically intercepts and strips the <code className="text-xs bg-ivory-200 px-1.5 py-0.5 rounded text-charcoal">Alt-Svc</code> header using declarative net requests, keeping the stream entirely within the TCP tunnel.

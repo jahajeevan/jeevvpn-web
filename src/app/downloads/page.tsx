@@ -57,8 +57,8 @@ const faqs = [
     a: 'Modern web platforms push HTTP/3 (QUIC) over UDP port 443 by default. Many strict campus firewalls drop or throttle non-TCP traffic. JeevVPN v1.0.2 dynamically strips the Alt-Svc header, keeping all connections on an unbroken TLS 1.3 TCP tunnel.',
   },
   {
-    q: 'How do I verify the VPN is active?',
-    a: 'Open the extension popup and check the status indicator. When green ("Protected"), visit any IP test site like api.ipify.org or ipleak.net to confirm your public egress IP reflects your Korea Central server (20.41.107.22).',
+    q: 'How do I verify the connection is active?',
+    a: 'Open the extension popup and check the status indicator. When green ("Protected"), visit any IP test site to confirm your public egress location reflects your Seoul cloud server node.',
   },
 ];
 
@@ -149,32 +149,32 @@ export default function DownloadsPage() {
               </div>
             </div>
 
-            {/* Right: Default Config Preview Card */}
+            {/* Right: Server Config Preview Card */}
             <div className="lg:col-span-5 bg-ivory-100 p-6 rounded-2xl border border-border-light space-y-4 font-mono text-xs">
               <div className="flex items-center justify-between pb-3 border-b border-border-light">
-                <span className="text-charcoal font-display font-semibold text-sm">Server Preset (Korea)</span>
-                <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold text-[10px]">PRESET</span>
+                <span className="text-charcoal font-display font-semibold text-sm">Active Server Config</span>
+                <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold text-[10px]">PRE-CONFIGURED</span>
               </div>
               <div className="space-y-2.5 text-charcoal-secondary">
                 <div className="flex justify-between">
-                  <span className="text-charcoal-faint">Server Address</span>
-                  <span className="text-charcoal font-semibold">20-41-107-22.sslip.io</span>
+                  <span className="text-charcoal-faint">Server Location</span>
+                  <span className="text-charcoal font-semibold">Seoul, South Korea</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-charcoal-faint">Port</span>
-                  <span className="text-charcoal font-semibold">443</span>
+                  <span className="text-charcoal-faint">Tunnel Port</span>
+                  <span className="text-charcoal font-semibold">443 (HTTPS)</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-charcoal-faint">Security Protocol</span>
                   <span className="text-emerald-deep font-semibold">Stealth (https / TLS)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-charcoal-faint">Username</span>
-                  <span className="text-charcoal font-semibold">jeev</span>
+                  <span className="text-charcoal-faint">Authentication</span>
+                  <span className="text-charcoal font-semibold">•••••••• (Bundled)</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-charcoal-faint">Tunnel Encryption</span>
-                  <span className="text-charcoal font-semibold">TLS 1.3 (Let&apos;s Encrypt)</span>
+                  <span className="text-charcoal font-semibold">TLS 1.3 Verified</span>
                 </div>
               </div>
             </div>

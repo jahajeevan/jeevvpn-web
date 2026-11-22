@@ -128,7 +128,7 @@ export default function Shield3D() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-deep" />
           </span>
           <span className="text-xs font-mono font-medium text-charcoal">
-            Seoul · 20.41.107.22:443
+            Seoul Cloud Node · Active
           </span>
           <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
             TLS 1.3

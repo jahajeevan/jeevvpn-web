@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Shield, Github, Globe2, ExternalLink } from 'lucide-react';
+import { Shield, Github, ExternalLink } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -16,12 +16,12 @@ export default function Footer() {
               <span className="font-display font-bold text-charcoal text-base">JeevVPN</span>
             </div>
             <p className="text-sm text-charcoal-muted leading-relaxed max-w-sm">
-              An independent, self-hosted VPN project engineered for private, unrestricted browsing.
-              Zero data-mining, zero third-party brokers, and no commercial subscription traps.
+              An independent, self-hosted browsing project engineered for private, controlled connection management.
+              Powered by a dedicated Chromium extension and private cloud infrastructure.
             </p>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border-light text-xs text-charcoal-muted">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border-light text-xs text-charcoal-muted shadow-soft">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-deep" />
-              <span>Dedicated Korea Central Node (20.41.107.22)</span>
+              <span>Seoul Cloud Node · Active</span>
             </div>
           </div>
 
@@ -49,20 +49,8 @@ export default function Footer() {
 
           {/* Open Source / Tech Details */}
           <div className="space-y-3">
-            <p className="text-xs font-semibold text-charcoal uppercase tracking-wider">Open Infrastructure</p>
+            <p className="text-xs font-semibold text-charcoal uppercase tracking-wider">Project</p>
             <ul className="space-y-2 text-sm">
-              <li>
-                <a 
-                  href="https://github.com/jahajeevan/JeevVPN" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-charcoal-muted hover:text-emerald-deep flex items-center gap-1.5 transition-colors"
-                >
-                  <Github size={14} />
-                  <span>JeevVPN Android</span>
-                  <ExternalLink size={12} className="opacity-60" />
-                </a>
-              </li>
               <li>
                 <a 
                   href="https://github.com/jahajeevan/jeevvpn-web" 
@@ -70,13 +58,16 @@ export default function Footer() {
                   rel="noopener noreferrer" 
                   className="text-charcoal-muted hover:text-emerald-deep flex items-center gap-1.5 transition-colors"
                 >
-                  <Globe2 size={14} />
-                  <span>Website Source</span>
+                  <Github size={14} />
+                  <span>GitHub Repository</span>
                   <ExternalLink size={12} className="opacity-60" />
                 </a>
               </li>
               <li className="text-xs text-charcoal-faint pt-1">
-                Manifest V3 Chromium Extension · TLS 1.3
+                Chromium Extension (Manifest V3)
+              </li>
+              <li className="text-xs text-charcoal-faint">
+                Chrome · Edge · Brave
               </li>
             </ul>
           </div>
@@ -86,7 +77,7 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-charcoal-muted">
           <p>© {new Date().getFullYear()} JeevVPN. Self-hosted personal project by Jahajeevan.</p>
           <p className="text-center sm:text-right text-charcoal-faint">
-            Private use only. Not a commercial service. Intended for privacy compliance and legitimate research.
+            Private use only. Not a commercial service. Engineered for technical research and transparent connectivity.
           </p>
         </div>
       </div>
