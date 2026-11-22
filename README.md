@@ -200,7 +200,7 @@ Generates a static export bundle inside the `out/` directory, optimized for zero
 ## 👨‍💻 Author
 
 **Jahajeevan V**
-- **Website / Portfolio**: [jahajeevan.github.io](https://jahajeevan.github.io)
+- **Website / Portfolio**: [jahajeevan.lovable.app](https://jahajeevan.lovable.app)
 - **GitHub**: [@jahajeevan](https://github.com/jahajeevan)
 - **Email**: [jahajeevanv@gmail.com](mailto:jahajeevanv@gmail.com)
 

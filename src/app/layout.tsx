@@ -4,20 +4,40 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'JeevVPN — Browse like the firewall isn\'t even there.',
-  description: 'JeevVPN is an independent, single-tenant private VPN engineered for campus firewall bypass and secure everyday browsing.',
-  keywords: ['VPN', 'privacy', 'browser extension', 'self-hosted', 'secure browsing', 'Korea proxy', 'campus firewall bypass'],
+  metadataBase: new URL('https://jeevvpn-web.vercel.app'),
+  title: 'JeevVPN — Private Browsing, Your Infrastructure',
+  description:
+    'Explore JeevVPN, a self-hosted browsing project powered by a Chromium browser extension and private cloud infrastructure.',
+  keywords: [
+    'JeevVPN',
+    'self-hosted browsing',
+    'Chromium extension',
+    'private cloud infrastructure',
+    'Chrome',
+    'Edge',
+    'Brave',
+    'open-source proxy',
+  ],
+  authors: [{ name: 'Jahajeevan V', url: 'https://jahajeevan.lovable.app' }],
+  creator: 'Jahajeevan V',
   openGraph: {
-    title: 'JeevVPN — Premium Self-Hosted VPN',
-    description: 'Browse like the firewall isn\'t even there. Built with TLS 1.3 encapsulation and single-tenant Korean infrastructure.',
+    title: 'JeevVPN — Private Browsing, Your Infrastructure',
+    description:
+      'Explore JeevVPN, a self-hosted browsing project powered by a Chromium browser extension and private cloud infrastructure.',
     url: 'https://jeevvpn-web.vercel.app',
     siteName: 'JeevVPN',
+    locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JeevVPN',
-    description: 'Browse like the firewall isn\'t even there.',
+    title: 'JeevVPN — Private Browsing, Your Infrastructure',
+    description:
+      'Explore JeevVPN, a self-hosted browsing project powered by a Chromium browser extension and private cloud infrastructure.',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
