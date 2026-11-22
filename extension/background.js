@@ -2,13 +2,15 @@
 // Routes all browser traffic through the JeevVPN proxy on connect, and answers
 // the proxy's auth challenge INSTANTLY (creds kept in memory) so pages never
 // fail while the worker "wakes up".
+// Also automatically strips "Alt-Svc" headers so browsers never upgrade to UDP/QUIC,
+// ensuring Instagram, YouTube, etc. stay 100% on the VPN tunnel.
 
 const DEFAULTS = {
-  host: "52.140.121.205", // your Azure VM public IP (change in Options)
-  port: 8443,
+  host: "20.41.107.22",
+  port: 443,
   scheme: "http", // "http" (plain) or "https" (TLS/stealth)
-  username: "",
-  password: "",
+  username: "jeev",
+  password: "jeevvpn123",
   connected: false,
 };
 
@@ -42,6 +44,53 @@ chrome.alarms.onAlarm.addListener(() => {
   /* firing wakes the worker; no work needed */
 });
 
+// Strip "Alt-Svc" header so the browser never switches to UDP (HTTP/3 / QUIC).
+// This guarantees sites like Instagram and YouTube route 100% through the TCP tunnel.
+async function setBlockQuic(enable) {
+  try {
+    if (chrome.declarativeNetRequest) {
+      if (enable) {
+        await chrome.declarativeNetRequest.updateDynamicRules({
+          removeRuleIds: [1],
+          addRules: [
+            {
+              id: 1,
+              priority: 1,
+              action: {
+                type: "modifyHeaders",
+                responseHeaders: [{ header: "alt-svc", operation: "remove" }],
+              },
+              condition: {
+                urlFilter: "*",
+                resourceTypes: [
+                  "main_frame",
+                  "sub_frame",
+                  "stylesheet",
+                  "script",
+                  "image",
+                  "font",
+                  "object",
+                  "xmlhttprequest",
+                  "ping",
+                  "media",
+                  "websocket",
+                  "other",
+                ],
+              },
+            },
+          ],
+        });
+      } else {
+        await chrome.declarativeNetRequest.updateDynamicRules({
+          removeRuleIds: [1],
+        });
+      }
+    }
+  } catch (err) {
+    console.error("Failed to update declarativeNetRequest rules:", err);
+  }
+}
+
 async function applyProxy(wantOn) {
   await loadAll();
   const on = !!(wantOn && cfg.host && cfg.port);
@@ -61,6 +110,7 @@ async function applyProxy(wantOn) {
     await chrome.proxy.settings.clear({ scope: "regular" });
   }
 
+  await setBlockQuic(on);
   await chrome.storage.local.set({ connected: on });
   setBadge(on);
   keepAlive(on);

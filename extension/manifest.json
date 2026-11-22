@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "JeevVPN",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Private browsing for you and your crew — one click routes your browser through your JeevVPN server.",
-  "permissions": ["proxy", "storage", "webRequest", "webRequestAuthProvider", "alarms"],
+  "permissions": ["proxy", "storage", "webRequest", "webRequestAuthProvider", "alarms", "declarativeNetRequest"],
   "host_permissions": ["<all_urls>"],
   "background": { "service_worker": "background.js" },
   "action": {
