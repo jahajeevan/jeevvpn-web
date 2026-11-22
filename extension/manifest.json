@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "JeevVPN",
+  "version": "1.0.1",
+  "description": "Private browsing for you and your crew — one click routes your browser through your JeevVPN server.",
+  "permissions": ["proxy", "storage", "webRequest", "webRequestAuthProvider", "alarms"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" }
+  },
+  "icons": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" },
+  "options_page": "options.html"
+}

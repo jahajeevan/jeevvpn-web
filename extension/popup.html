@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; margin: 0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; }
+      body {
+        width: 300px;
+        padding: 18px;
+        color: #0b1220;
+        background:
+          radial-gradient(80% 60% at 20% 0%, rgba(0, 184, 102, 0.14), transparent 60%),
+          radial-gradient(80% 60% at 100% 10%, rgba(46, 125, 255, 0.12), transparent 60%),
+          #eef1f8;
+      }
+      .top { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+      .top b { font-size: 15px; letter-spacing: -0.02em; }
+      .gear { margin-left: auto; cursor: pointer; opacity: 0.5; font-size: 15px; background: none; border: 0; }
+      .gear:hover { opacity: 1; }
+      .orb {
+        width: 116px; height: 116px; margin: 6px auto 0; border-radius: 50%;
+        display: grid; place-items: center; cursor: pointer; border: 0;
+        background: radial-gradient(120% 120% at 30% 22%, #fff, #e6ecf5);
+        box-shadow: 0 14px 34px -18px rgba(16, 24, 40, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.9);
+        transition: transform 0.12s ease, box-shadow 0.25s ease, background 0.25s ease;
+      }
+      .orb:active { transform: scale(0.95); }
+      .orb.on {
+        background: radial-gradient(120% 120% at 30% 20%, #22e58f, #00a15a);
+        box-shadow: 0 20px 44px -16px rgba(0, 184, 102, 0.8), inset 0 2px 6px rgba(255, 255, 255, 0.5);
+      }
+      .orb svg { width: 46px; height: 46px; stroke: #0b1220; }
+      .orb.on svg { stroke: #fff; }
+      .status { text-align: center; margin-top: 16px; }
+      .status .s { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+      .status .s.on { color: #00a15a; }
+      .status .hint { font-size: 12px; color: #55607a; margin-top: 2px; }
+      .card {
+        margin-top: 16px; padding: 12px 14px; border-radius: 16px;
+        background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.8);
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .card .k { font-size: 11px; color: #8a94a6; }
+      .card .v { font-size: 13px; font-weight: 600; font-family: ui-monospace, monospace; }
+      .warn { margin-top: 12px; font-size: 12px; color: #b9761a; text-align: center; }
+      .warn a { color: #00a15a; }
+    </style>
+  </head>
+  <body>
+    <div class="top">
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+        <path d="M16 2.5 27 7v8.2C27 22.4 22 27.6 16 29.5 10 27.6 5 22.4 5 15.2V7L16 2.5Z" fill="#00b866" />
+        <path d="M10.8 16.3 14.4 20 21.2 12.4" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <b>JeevVPN</b>
+      <button class="gear" id="gear" title="Settings">⚙</button>
+    </div>
+
+    <button class="orb" id="orb" aria-label="Toggle VPN">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round">
+        <path d="M12 3v9" />
+        <path d="M6.4 6.4a8 8 0 1 0 11.2 0" />
+      </svg>
+    </button>
+
+    <div class="status">
+      <div class="s" id="statusText">Not connected</div>
+      <div class="hint" id="hintText">Tap to connect</div>
+    </div>
+
+    <div class="card">
+      <span class="k">Your IP</span>
+      <span class="v" id="ip">—</span>
+    </div>
+
+    <div class="warn" id="warn" style="display:none">
+      Set your server &amp; key in <a href="#" id="openOptions">Settings</a> first.
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

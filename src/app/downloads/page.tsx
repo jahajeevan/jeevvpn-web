@@ -80,23 +80,23 @@ export default function DownloadsPage() {
           <h2 className="font-display font-bold text-xl text-white mb-2">JeevVPN Extension</h2>
           <p className="text-white/45 text-sm mb-6">Chrome Extension · Chromium compatible · Developer build</p>
 
-          {/* Placeholder download button */}
+          {/* Direct download button */}
           <div className="inline-flex flex-col items-center gap-2">
-            <span
-              className="inline-flex items-center gap-2 px-10 py-3.5 rounded-2xl text-base font-bold cursor-not-allowed select-none"
+            <a
+              href="/downloads/JeevVPN-extension.zip"
+              download="JeevVPN-extension.zip"
+              className="inline-flex items-center gap-2 px-10 py-3.5 rounded-2xl text-base font-bold text-ink transition-transform hover:scale-[1.02] active:scale-[0.98]"
               style={{
                 background: 'linear-gradient(135deg, #00E27A, #00C46B)',
-                color: '#0A0F1A',
-                opacity: 0.5,
                 boxShadow: '0 4px 20px rgba(0,196,107,0.3)',
               }}
             >
               <Download size={18} strokeWidth={2.5} />
-              Download ZIP
-            </span>
-            <span className="text-white/35 text-xs flex items-center gap-1.5">
-              <AlertTriangle size={12} />
-              Extension package coming soon — check back shortly.
+              Download Extension ZIP
+            </a>
+            <span className="text-white/40 text-xs flex items-center gap-1.5">
+              <CheckCircle size={12} className="text-green-main" />
+              Ready for Chrome, Edge, and Brave (Manifest v3)
             </span>
           </div>
         </div>
