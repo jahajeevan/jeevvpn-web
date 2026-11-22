@@ -1,5 +1,5 @@
 const FIELDS = ["host", "port", "scheme", "username", "password"];
-const DEFAULTS = { host: "52.140.121.205", port: 8443, scheme: "http", username: "", password: "" };
+const DEFAULTS = { host: "20-41-107-22.sslip.io", port: 443, scheme: "https", username: "jeev", password: "jeevvpn123" };
 
 async function load() {
   const cfg = await chrome.storage.local.get(DEFAULTS);

@@ -6,9 +6,9 @@
 // ensuring Instagram, YouTube, etc. stay 100% on the VPN tunnel.
 
 const DEFAULTS = {
-  host: "20.41.107.22",
+  host: "20-41-107-22.sslip.io",
   port: 443,
-  scheme: "http", // "http" (plain) or "https" (TLS/stealth)
+  scheme: "https", // "http" (plain) or "https" (TLS/stealth)
   username: "jeev",
   password: "jeevvpn123",
   connected: false,
