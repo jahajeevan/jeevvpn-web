@@ -1,96 +1,128 @@
 'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Shield } from 'lucide-react';
-import { useState } from 'react';
+import { Shield, ArrowRight, Menu, X, Download } from 'lucide-react';
 
 const navLinks = [
-  { href: '/',          label: 'Home'      },
+  { href: '/',          label: 'Home' },
   { href: '/downloads', label: 'Downloads' },
-  { href: '/about',     label: 'About'     },
+  { href: '/about',     label: 'About' },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 15);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="mx-auto max-w-6xl px-6 pt-5">
-        <div className="glass rounded-2xl px-5 py-3 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-xl flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #7BFFC4, #00C46B)', boxShadow: '0 4px 14px rgba(0,196,107,0.45)' }}>
-              <Shield size={16} className="text-ink" strokeWidth={2.5} />
-            </div>
-            <span className="font-display font-bold text-white text-[15px] tracking-tight">JeevVPN</span>
-          </Link>
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-[#FAF9F5]/90 backdrop-blur-md border-b border-border-light py-3.5 shadow-soft' 
+          : 'bg-transparent py-5'
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 flex items-center justify-between">
+        {/* Logo */}
+        <Link 
+          href="/" 
+          className="flex items-center gap-2.5 group transition-transform duration-200 active:scale-95"
+        >
+          <div className="w-8 h-8 rounded-xl bg-emerald-deep flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-105">
+            <Shield size={16} className="text-white fill-white/20" strokeWidth={2.4} />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-display font-bold text-charcoal text-[17px] tracking-tight leading-none">
+              JeevVPN
+            </span>
+          </div>
+        </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-1 bg-surface-light px-2 py-1.5 rounded-full border border-border-light shadow-soft">
+          {navLinks.map(({ href, label }) => {
+            const active = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`px-4 py-1.5 rounded-full text-[13.5px] font-medium transition-all duration-200 ${
+                  active
+                    ? 'bg-ivory-200 text-charcoal shadow-sm font-semibold'
+                    : 'text-charcoal-muted hover:text-charcoal hover:bg-ivory-100'
+                }`}
+              >
+                {label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Action Button */}
+        <div className="hidden md:flex items-center gap-3">
+          <Link
+            href="/downloads"
+            className="btn-emerald px-5 py-2 text-[13.5px] flex items-center gap-2 group"
+          >
+            <span>Get Extension</span>
+            <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+          </Link>
+        </div>
+
+        {/* Mobile Hamburger Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden p-2 rounded-xl text-charcoal-secondary hover:bg-ivory-200 transition-colors"
+          aria-label="Toggle Navigation"
+        >
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-x-4 top-20 bg-white/98 backdrop-blur-xl border border-border-light rounded-3xl p-6 shadow-elevated transition-all">
+          <div className="flex flex-col gap-2">
             {navLinks.map(({ href, label }) => {
               const active = pathname === href;
               return (
                 <Link
                   key={href}
                   href={href}
-                  className={`px-4 py-1.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-2xl text-base font-medium transition-colors ${
                     active
-                      ? 'bg-green-core/20 text-green-main border border-green-core/30'
-                      : 'text-white/60 hover:text-white hover:bg-white/[0.06]'
+                      ? 'bg-ivory-200 text-emerald-deep font-semibold'
+                      : 'text-charcoal-secondary hover:bg-ivory-100'
                   }`}
                 >
                   {label}
                 </Link>
               );
             })}
-          </nav>
-
-          {/* CTA */}
-          <div className="hidden md:block">
-            <Link href="/downloads" className="btn-primary px-5 py-2 text-sm inline-block">
-              Get Extension
-            </Link>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden text-white/60 hover:text-white p-1"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-          >
-            <div className="w-5 h-0.5 bg-current mb-1 transition-all" />
-            <div className="w-5 h-0.5 bg-current mb-1 transition-all" />
-            <div className="w-5 h-0.5 bg-current transition-all" />
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        {open && (
-          <div className="glass rounded-2xl mt-2 px-4 py-4 flex flex-col gap-1 md:hidden">
-            {navLinks.map(({ href, label }) => (
+            <div className="pt-3 mt-2 border-t border-border-light">
               <Link
-                key={href}
-                href={href}
-                onClick={() => setOpen(false)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                  pathname === href
-                    ? 'bg-green-core/20 text-green-main'
-                    : 'text-white/70 hover:text-white hover:bg-white/[0.06]'
-                }`}
+                href="/downloads"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn-emerald w-full py-3 text-center text-sm flex items-center justify-center gap-2"
               >
-                {label}
-              </Link>
-            ))}
-            <div className="pt-2 mt-1 border-t border-white/[0.07]">
-              <Link href="/downloads" onClick={() => setOpen(false)} className="btn-primary px-5 py-2.5 text-sm inline-block w-full text-center">
-                Get Extension
+                <Download size={16} />
+                <span>Download Extension</span>
               </Link>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   );
 }

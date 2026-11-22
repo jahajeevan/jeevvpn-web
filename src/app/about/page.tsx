@@ -1,122 +1,205 @@
-import { Shield, Server, Lock, Eye, Heart, Zap, Github } from 'lucide-react';
-
-const sections = [
-  {
-    icon: Heart,
-    color: '#00E27A',
-    title: 'What is JeevVPN?',
-    body: `JeevVPN is a personal, self-hosted VPN project built for private, reliable everyday browsing. It was created to give a small, trusted group of people access to a fast VPN without relying on commercial providers, third-party apps, or subscription fees.
-
-It is not a product. It is infrastructure — built, maintained and operated by one person, shared with a trusted few.`,
-  },
-  {
-    icon: Server,
-    color: '#12D9A8',
-    title: 'Self-hosted infrastructure',
-    body: `JeevVPN runs on private cloud servers — currently hosted on Microsoft Azure across two regions (India · Pune and Korea Central). There is no shared VPN provider in the middle. Traffic exits directly from the server and goes nowhere else.
-
-The browser extension and the Android app both connect to the same infrastructure. The backend is managed privately and updated independently of this website.`,
-  },
-  {
-    icon: Zap,
-    color: '#7BFFC4',
-    title: 'How the tunnel works',
-    body: `JeevVPN uses the Trojan protocol over TLS on port 443 — the same port as ordinary HTTPS. This makes VPN traffic indistinguishable from regular web traffic to most network inspectors and firewalls.
-
-QUIC (UDP/443) is intentionally blocked so Chrome and other browsers fall back to reliable TCP. IPv6 is disabled in the tunnel to eliminate black-hole routing issues. DNS resolves inside the tunnel through the exit server, so ISP DNS-based blocks do not apply.`,
-  },
-  {
-    icon: Eye,
-    color: '#00C46B',
-    title: 'Privacy',
-    body: `No connection logs are kept. This website collects no analytics, sets no cookies, and uses no third-party tracking scripts.
-
-The Android app previously used email-OTP authentication through a Vercel backend. That authentication flow required an email address — no other personal data was stored. Future versions of the browser extension may use a simpler credential model.`,
-  },
-  {
-    icon: Lock,
-    color: '#00E27A',
-    title: 'Security',
-    body: `All traffic through the tunnel is encrypted end-to-end using TLS 1.3. The server certificate is validated by the client on every connection — a misconfigured or fake server cannot intercept traffic.
-
-Credentials are never stored inside the app binary or the browser extension. The server configuration is private and not published in this repository.`,
-  },
-];
+import React from 'react';
+import Link from 'next/link';
+import { 
+  Shield, 
+  Server, 
+  Lock, 
+  Terminal, 
+  ArrowRight, 
+  Cpu, 
+  Globe2, 
+  Layers, 
+  AlertTriangle,
+  Github
+} from 'lucide-react';
 
 export default function AboutPage() {
   return (
-    <div className="relative min-h-screen pt-32 pb-24 px-6 overflow-hidden">
-      {/* Aurora */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 65% 40% at 50% 0%, rgba(0,196,107,0.12) 0%, transparent 55%), radial-gradient(ellipse 50% 35% at 90% 70%, rgba(18,217,168,0.07) 0%, transparent 50%)',
-        }}
-      />
+    <div className="relative min-h-screen pt-28 sm:pt-36 pb-24">
+      {/* Ambient background soft glow */}
+      <div className="ambient-glow absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[650px] -z-10 pointer-events-none" />
 
-      <div className="relative mx-auto max-w-3xl">
-        {/* Header */}
-        <div className="mb-14">
-          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-6">
-            <Shield size={13} className="text-green-main" />
-            <span className="text-white/60 text-xs font-medium">About this project</span>
+      <div className="max-w-4xl mx-auto px-6 sm:px-8">
+        {/* ─────────────────────────────────────────────────────────────
+            HEADER & MANIFESTO
+           ───────────────────────────────────────────────────────────── */}
+        <div className="mb-14 text-center sm:text-left">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-border-light shadow-soft text-xs text-charcoal mb-4">
+            <Shield size={13} className="text-emerald-deep" />
+            <span className="font-medium">Engineering Manifesto</span>
           </div>
-          <h1 className="font-display font-bold text-4xl sm:text-5xl text-white mb-4 tracking-tight leading-tight">
-            JeevVPN — built for{' '}
-            <span className="text-gradient">privacy by default</span>
+          <h1 className="font-display font-bold text-4xl sm:text-5xl text-charcoal tracking-tight">
+            About JeevVPN
           </h1>
-          <p className="text-white/50 text-base sm:text-lg leading-relaxed max-w-2xl">
-            A self-hosted, private VPN project. No commercial interests, no data harvesting, no subscriptions.
+          <p className="text-base sm:text-lg text-charcoal-muted mt-3 leading-relaxed max-w-2xl">
+            An independent privacy project engineered to demonstrate that reliable, secure network transit does not require corporate middlemen or privacy compromises.
           </p>
         </div>
 
-        {/* Content sections */}
-        <div className="flex flex-col gap-8">
-          {sections.map(({ icon: Icon, color, title, body }) => (
-            <div key={title} className="glass rounded-2xl p-7 glass-hover">
-              <div className="flex items-start gap-4 mb-4">
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
-                  style={{ background: `${color}1A` }}
-                >
-                  <Icon size={20} style={{ color }} strokeWidth={1.8} />
-                </div>
-                <h2 className="font-display font-semibold text-white text-xl pt-1.5">{title}</h2>
-              </div>
-              <div className="pl-14">
-                {body.split('\n\n').map((para, i) => (
-                  <p key={i} className={`text-white/55 text-sm leading-relaxed ${i > 0 ? 'mt-3' : ''}`}>
-                    {para}
-                  </p>
-                ))}
-              </div>
+        {/* ─────────────────────────────────────────────────────────────
+            SECTION 1: THE ORIGIN & PROBLEM
+           ───────────────────────────────────────────────────────────── */}
+        <div className="card-premium p-8 sm:p-12 mb-10 bg-white">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-deep flex items-center justify-center">
+              <Layers size={20} />
             </div>
-          ))}
+            <h2 className="font-display font-bold text-2xl text-charcoal">
+              Why JeevVPN Was Built
+            </h2>
+          </div>
+          <div className="space-y-4 text-charcoal-secondary text-[15px] leading-relaxed">
+            <p>
+              Most university campuses and corporate networks operate aggressive Deep Packet Inspection (DPI) appliances. These systems routinely inspect traffic signatures, drop standard VPN protocols (like WireGuard, OpenVPN, and IPsec), and restrict access to essential modern platforms like Instagram, research repositories, and streaming CDNs.
+            </p>
+            <p>
+              Students and researchers typically turn to &quot;free&quot; VPN apps from mobile app stores. Unfortunately, those commercial services frequently harvest user telemetry, log browsing activity, inject advertisements, or sell proxy bandwidth to commercial third-party aggregators.
+            </p>
+            <p className="font-medium text-charcoal">
+              JeevVPN was built as a clean, single-tenant alternative: a lightweight browser extension backed by private cloud infrastructure that you control completely.
+            </p>
+          </div>
         </div>
 
-        {/* Disclaimer */}
-        <div
-          className="glass rounded-2xl p-6 mt-10"
-          style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.025)' }}
-        >
-          <h3 className="font-display font-semibold text-white/70 text-sm mb-2">Disclaimer</h3>
-          <p className="text-white/35 text-xs leading-relaxed">
-            JeevVPN is a personal infrastructure project and is not offered as a commercial service. It is not affiliated with any commercial VPN provider. Access is by invitation only. The operators make no warranty of uptime or availability. Use responsibly and in compliance with applicable laws in your region.
+        {/* ─────────────────────────────────────────────────────────────
+            SECTION 2: INFRASTRUCTURE REALITY & HONEST TELEMETRY
+           ───────────────────────────────────────────────────────────── */}
+        <div className="card-premium p-8 sm:p-12 mb-10 bg-white">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-deep flex items-center justify-center">
+              <Server size={20} />
+            </div>
+            <h2 className="font-display font-bold text-2xl text-charcoal">
+              Actual Infrastructure Deployment
+            </h2>
+          </div>
+          
+          <div className="space-y-4 text-charcoal-secondary text-[15px] leading-relaxed mb-6">
+            <p>
+              Commercial VPN providers often boast about having &quot;thousands of global servers&quot; — most of which are cheap virtual IPs or rented third-party VPS nodes with unknown logging practices.
+            </p>
+            <p>
+              In contrast, JeevVPN is completely transparent about its operational reality: we currently maintain <strong>one active production node</strong> provisioned in <strong>Microsoft Azure Korea Central</strong> (Seoul).
+            </p>
+          </div>
+
+          {/* Infrastructure Spec Sheet */}
+          <div className="bg-ivory-100 rounded-2xl p-6 border border-border-light font-mono text-xs space-y-3">
+            <div className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-border-light">
+              <span className="text-charcoal-faint">Host Provider</span>
+              <span className="text-charcoal font-semibold">Microsoft Azure (Korea Central Zone 1)</span>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-border-light">
+              <span className="text-charcoal-faint">Public Endpoint</span>
+              <span className="text-charcoal font-semibold">20-41-107-22.sslip.io (20.41.107.22)</span>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-border-light">
+              <span className="text-charcoal-faint">Active Port & Protocol</span>
+              <span className="text-charcoal font-semibold">Port 443 · Stunnel 5.72 / TLS 1.3</span>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-border-light">
+              <span className="text-charcoal-faint">Proxy Core</span>
+              <span className="text-charcoal font-semibold">Squid 6.14 (Basic NCSA Auth)</span>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:justify-between py-1 border-b border-border-light">
+              <span className="text-charcoal-faint">SSL Certificate</span>
+              <span className="text-emerald-deep font-bold">Let&apos;s Encrypt Authority (Auto-Renewed)</span>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:justify-between py-1">
+              <span className="text-charcoal-faint">DNS Resolver</span>
+              <span className="text-charcoal font-semibold">Azure Internal (168.63.129.16)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ─────────────────────────────────────────────────────────────
+            SECTION 3: HOW THE TUNNEL WORKS (TECHNICAL SPEC)
+           ───────────────────────────────────────────────────────────── */}
+        <div className="card-premium p-8 sm:p-12 mb-10 bg-white">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-deep flex items-center justify-center">
+              <Cpu size={20} />
+            </div>
+            <h2 className="font-display font-bold text-2xl text-charcoal">
+              How the Tunnel Works
+            </h2>
+          </div>
+          <div className="space-y-4 text-charcoal-secondary text-[15px] leading-relaxed">
+            <p>
+              When you enable JeevVPN in your browser, traffic undergoes a multi-layer routing process designed to blend into ordinary internet traffic:
+            </p>
+            <ol className="list-decimal pl-5 space-y-3 pt-2">
+              <li>
+                <strong>Browser Proxy Rule:</strong> The extension configures Chromium&apos;s native <code className="text-xs bg-ivory-200 px-1.5 py-0.5 rounded text-charcoal">chrome.proxy</code> subsystem to route all web traffic through an HTTPS proxy at <code className="text-xs bg-ivory-200 px-1.5 py-0.5 rounded text-charcoal">https://20-41-107-22.sslip.io:443</code>.
+              </li>
+              <li>
+                <strong>Alt-Svc Dynamic Suppression:</strong> Chromium extensions normally only proxy TCP. Media services like Instagram attempt to break out onto raw UDP/QUIC streams, which trigger campus blocks. The extension dynamically intercepts and strips the <code className="text-xs bg-ivory-200 px-1.5 py-0.5 rounded text-charcoal">Alt-Svc</code> header using declarative net requests, keeping the stream entirely within the TCP tunnel.
+              </li>
+              <li>
+                <strong>TLS Encapsulation:</strong> Packets travel out of your machine wrapped in standard TLS 1.3 encryption on port 443. To local network monitors, this looks identical to regular HTTPS browsing to an enterprise service.
+              </li>
+              <li>
+                <strong>Server Egress:</strong> The Korea node decapsulates the TLS session and proxies requests directly to their destination servers, returning responses cleanly.
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        {/* ─────────────────────────────────────────────────────────────
+            SECTION 4: TRANSPARENT PRIVACY & ETHICS
+           ───────────────────────────────────────────────────────────── */}
+        <div className="card-premium p-8 sm:p-12 mb-10 bg-white">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-deep flex items-center justify-center">
+              <Lock size={20} />
+            </div>
+            <h2 className="font-display font-bold text-2xl text-charcoal">
+              Privacy & Data Ethics
+            </h2>
+          </div>
+          <div className="space-y-4 text-charcoal-secondary text-[15px] leading-relaxed">
+            <p>
+              We do not market hyperbolic claims about &quot;military-grade 100% untraceable dark-web anonymity&quot;. Instead, we offer verifiable technical realities:
+            </p>
+            <ul className="space-y-2.5 pt-2">
+              <li className="flex items-start gap-2.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-deep mt-2 shrink-0" />
+                <span><strong>No Analytics on Website:</strong> This website collects zero cookies, contains no Google Analytics, and includes no advertising scripts.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-deep mt-2 shrink-0" />
+                <span><strong>Single-Tenant Server:</strong> Only trusted members connect to the node, drastically reducing the risk of IP reputation poisoning.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-deep mt-2 shrink-0" />
+                <span><strong>Open Source Architecture:</strong> Both the extension code and the web client are maintained in public GitHub repositories for independent peer inspection.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* ─────────────────────────────────────────────────────────────
+            SECTION 5: RESPONSIBLE USE DISCLAIMER
+           ───────────────────────────────────────────────────────────── */}
+        <div className="bg-ivory-200 border border-border-light rounded-2xl p-6 sm:p-8 mb-12">
+          <div className="flex items-center gap-2.5 text-charcoal font-semibold text-sm mb-3">
+            <AlertTriangle size={16} className="text-emerald-deep" />
+            <span>Responsible Use & Disclaimer</span>
+          </div>
+          <p className="text-xs text-charcoal-muted leading-relaxed">
+            JeevVPN is an experimental, non-commercial research initiative provided on an &quot;as-is&quot; basis for personal privacy, academic research, and censorship resilience testing. It is not intended for unlawful activities, unauthorized access, or commercial distribution. Users remain solely responsible for compliance with their local telecommunications regulations and terms of service.
           </p>
         </div>
 
-        {/* GitHub link */}
-        <div className="mt-10 text-center">
-          <a
-            href="https://github.com/jahajeevan/JeevVPN"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 btn-ghost px-7 py-3 text-sm"
+        {/* Back Link */}
+        <div className="text-center">
+          <Link
+            href="/downloads"
+            className="btn-emerald inline-flex items-center gap-2 px-8 py-3.5 text-sm shadow-emerald"
           >
-            <Github size={16} />
-            View on GitHub
-          </a>
+            <span>Proceed to Downloads</span>
+            <ArrowRight size={14} />
+          </Link>
         </div>
       </div>
     </div>

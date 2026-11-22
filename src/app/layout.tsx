@@ -5,12 +5,12 @@ import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'JeevVPN — Browse like the firewall isn\'t even there.',
-  description: 'JeevVPN is a self-hosted, privacy-first VPN built for secure everyday browsing. Fast, lightweight, and yours.',
-  keywords: ['VPN', 'privacy', 'browser extension', 'self-hosted', 'secure browsing'],
+  description: 'JeevVPN is an independent, single-tenant private VPN engineered for campus firewall bypass and secure everyday browsing.',
+  keywords: ['VPN', 'privacy', 'browser extension', 'self-hosted', 'secure browsing', 'Korea proxy', 'campus firewall bypass'],
   openGraph: {
-    title: 'JeevVPN',
-    description: 'Browse like the firewall isn\'t even there.',
-    url: 'https://jeevvpn.vercel.app',
+    title: 'JeevVPN — Premium Self-Hosted VPN',
+    description: 'Browse like the firewall isn\'t even there. Built with TLS 1.3 encapsulation and single-tenant Korean infrastructure.',
+    url: 'https://jeevvpn-web.vercel.app',
     siteName: 'JeevVPN',
     type: 'website',
   },
@@ -23,10 +23,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen bg-surface antialiased">
-        <Navbar />
-        <main>{children}</main>
+    <html lang="en">
+      <body className="min-h-screen bg-ivory-100 text-charcoal font-body antialiased flex flex-col justify-between">
+        <div>
+          <Navbar />
+          <main>{children}</main>
+        </div>
         <Footer />
       </body>
     </html>
