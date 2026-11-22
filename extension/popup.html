@@ -1,81 +1,361 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JeevVPN</title>
     <style>
-      :root { color-scheme: light; }
-      * { box-sizing: border-box; margin: 0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; }
+      :root {
+        --bg-ivory: #FAF9F5;
+        --bg-card: #FFFFFF;
+        --border: #EAE7DF;
+        --charcoal: #12151A;
+        --slate: #5A6472;
+        --faint: #8F99A6;
+        --emerald: #0B643A;
+        --emerald-bright: #10B981;
+        --mint-bg: #E8F7EE;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
       body {
-        width: 300px;
-        padding: 18px;
-        color: #0b1220;
-        background:
-          radial-gradient(80% 60% at 20% 0%, rgba(0, 184, 102, 0.14), transparent 60%),
-          radial-gradient(80% 60% at 100% 10%, rgba(46, 125, 255, 0.12), transparent 60%),
-          #eef1f8;
+        width: 320px;
+        padding: 20px;
+        background-color: var(--bg-ivory);
+        color: var(--charcoal);
+        position: relative;
+        overflow: hidden;
       }
-      .top { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
-      .top b { font-size: 15px; letter-spacing: -0.02em; }
-      .gear { margin-left: auto; cursor: pointer; opacity: 0.5; font-size: 15px; background: none; border: 0; }
-      .gear:hover { opacity: 1; }
+
+      /* Subtle ambient emerald backlight */
+      .ambient-glow {
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 260px;
+        height: 260px;
+        background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .content-wrap {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Header */
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 22px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+
+      .logo-icon {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #10B981, #0B643A);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(11, 100, 58, 0.25);
+      }
+
+      .logo-icon svg {
+        width: 15px;
+        height: 15px;
+        stroke: #fff;
+        fill: rgba(255, 255, 255, 0.2);
+      }
+
+      .brand-title {
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: var(--charcoal);
+      }
+
+      .node-badge {
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        background: var(--mint-bg);
+        color: var(--emerald);
+        padding: 2px 7px;
+        border-radius: 999px;
+        margin-left: 4px;
+      }
+
+      .btn-gear {
+        width: 32px;
+        height: 32px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--slate);
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      }
+
+      .btn-gear:hover {
+        color: var(--charcoal);
+        background: #F4F2EB;
+        transform: rotate(20deg);
+      }
+
+      /* Orb Button (3D Skeuomorphic) */
+      .orb-container {
+        display: flex;
+        justify-content: center;
+        margin: 10px 0 20px;
+        position: relative;
+      }
+
       .orb {
-        width: 116px; height: 116px; margin: 6px auto 0; border-radius: 50%;
-        display: grid; place-items: center; cursor: pointer; border: 0;
-        background: radial-gradient(120% 120% at 30% 22%, #fff, #e6ecf5);
-        box-shadow: 0 14px 34px -18px rgba(16, 24, 40, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.9);
-        transition: transform 0.12s ease, box-shadow 0.25s ease, background 0.25s ease;
+        width: 124px;
+        height: 124px;
+        border-radius: 50%;
+        border: 0;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(130% 130% at 30% 25%, #FFFFFF 0%, #F0EEE6 100%);
+        box-shadow: 
+          0 16px 32px -8px rgba(18, 21, 26, 0.12),
+          0 4px 12px rgba(18, 21, 26, 0.04),
+          inset 0 2px 5px rgba(255, 255, 255, 1),
+          inset 0 -3px 6px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(234, 231, 223, 0.9);
+        transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background 0.25s ease;
+        outline: none;
       }
-      .orb:active { transform: scale(0.95); }
+
+      .orb:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+          0 20px 38px -10px rgba(18, 21, 26, 0.16),
+          0 6px 16px rgba(18, 21, 26, 0.06),
+          inset 0 2px 5px rgba(255, 255, 255, 1);
+      }
+
+      .orb:active {
+        transform: scale(0.95);
+      }
+
+      .orb svg {
+        width: 44px;
+        height: 44px;
+        stroke: var(--slate);
+        stroke-width: 2.2;
+        transition: stroke 0.25s ease, transform 0.25s ease;
+      }
+
+      /* Orb ON State */
       .orb.on {
-        background: radial-gradient(120% 120% at 30% 20%, #22e58f, #00a15a);
-        box-shadow: 0 20px 44px -16px rgba(0, 184, 102, 0.8), inset 0 2px 6px rgba(255, 255, 255, 0.5);
+        background: radial-gradient(130% 130% at 35% 25%, #10B981 0%, #0B643A 65%, #064E3B 100%);
+        border-color: rgba(16, 185, 129, 0.4);
+        box-shadow: 
+          0 18px 40px -10px rgba(11, 100, 58, 0.5),
+          0 6px 18px rgba(11, 100, 58, 0.2),
+          inset 0 2px 6px rgba(255, 255, 255, 0.45),
+          inset 0 -4px 8px rgba(0, 0, 0, 0.2);
       }
-      .orb svg { width: 46px; height: 46px; stroke: #0b1220; }
-      .orb.on svg { stroke: #fff; }
-      .status { text-align: center; margin-top: 16px; }
-      .status .s { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
-      .status .s.on { color: #00a15a; }
-      .status .hint { font-size: 12px; color: #55607a; margin-top: 2px; }
-      .card {
-        margin-top: 16px; padding: 12px 14px; border-radius: 16px;
-        background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.8);
-        display: flex; justify-content: space-between; align-items: center;
+
+      .orb.on svg {
+        stroke: #FFFFFF;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
       }
-      .card .k { font-size: 11px; color: #8a94a6; }
-      .card .v { font-size: 13px; font-weight: 600; font-family: ui-monospace, monospace; }
-      .warn { margin-top: 12px; font-size: 12px; color: #b9761a; text-align: center; }
-      .warn a { color: #00a15a; }
+
+      /* Status Typography */
+      .status-block {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .status-title {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: var(--charcoal);
+        transition: color 0.2s ease;
+      }
+
+      .status-title.on {
+        color: var(--emerald);
+      }
+
+      .status-hint {
+        font-size: 12px;
+        color: var(--slate);
+        margin-top: 3px;
+        font-weight: 400;
+      }
+
+      /* Telemetry Card */
+      .telemetry-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 13px 15px;
+        box-shadow: 0 2px 8px rgba(18, 21, 26, 0.03);
+      }
+
+      .card-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card-row:not(:last-child) {
+        padding-bottom: 9px;
+        margin-bottom: 9px;
+        border-bottom: 1px solid #F4F2EB;
+      }
+
+      .metric-label {
+        font-size: 11.5px;
+        color: var(--slate);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .metric-value {
+        font-size: 13px;
+        font-weight: 600;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+        color: var(--charcoal);
+      }
+
+      .metric-value.highlight {
+        color: var(--emerald);
+      }
+
+      /* Security feature badge */
+      .security-pill {
+        margin-top: 13px;
+        padding: 8px 12px;
+        border-radius: 12px;
+        background: rgba(234, 231, 223, 0.45);
+        border: 1px solid rgba(234, 231, 223, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 11px;
+        color: var(--slate);
+      }
+
+      .security-pill strong {
+        color: var(--emerald);
+        font-weight: 600;
+      }
+
+      .warn-box {
+        margin-top: 14px;
+        padding: 10px;
+        border-radius: 12px;
+        background: #FEF3C7;
+        border: 1px solid #FDE68A;
+        font-size: 11.5px;
+        color: #92400E;
+        text-align: center;
+      }
+
+      .warn-box a {
+        color: #B45309;
+        font-weight: 600;
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
-    <div class="top">
-      <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
-        <path d="M16 2.5 27 7v8.2C27 22.4 22 27.6 16 29.5 10 27.6 5 22.4 5 15.2V7L16 2.5Z" fill="#00b866" />
-        <path d="M10.8 16.3 14.4 20 21.2 12.4" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-      <b>JeevVPN</b>
-      <button class="gear" id="gear" title="Settings">⚙</button>
-    </div>
+    <div class="ambient-glow"></div>
 
-    <button class="orb" id="orb" aria-label="Toggle VPN">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round">
-        <path d="M12 3v9" />
-        <path d="M6.4 6.4a8 8 0 1 0 11.2 0" />
-      </svg>
-    </button>
+    <div class="content-wrap">
+      <!-- Header -->
+      <div class="header">
+        <div class="brand">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+            </svg>
+          </div>
+          <span class="brand-title">JeevVPN</span>
+          <span class="node-badge">🇰🇷 Seoul</span>
+        </div>
+        <button class="btn-gear" id="gear" title="Settings">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </button>
+      </div>
 
-    <div class="status">
-      <div class="s" id="statusText">Not connected</div>
-      <div class="hint" id="hintText">Tap to connect</div>
-    </div>
+      <!-- Center Ceramic Orb -->
+      <div class="orb-container">
+        <button class="orb" id="orb" aria-label="Toggle VPN">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v10" />
+            <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+          </svg>
+        </button>
+      </div>
 
-    <div class="card">
-      <span class="k">Your IP</span>
-      <span class="v" id="ip">—</span>
-    </div>
+      <!-- Status Text -->
+      <div class="status-block">
+        <div class="status-title" id="statusText">Not connected</div>
+        <div class="status-hint" id="hintText">Tap the orb to connect</div>
+      </div>
 
-    <div class="warn" id="warn" style="display:none">
-      Set your server &amp; key in <a href="#" id="openOptions">Settings</a> first.
+      <!-- Telemetry Specs -->
+      <div class="telemetry-card">
+        <div class="card-row">
+          <span class="metric-label">Your Egress IP</span>
+          <span class="metric-value highlight" id="ip">—</span>
+        </div>
+        <div class="card-row">
+          <span class="metric-label">Active Tunnel</span>
+          <span class="metric-value" id="protocol">TLS 1.3 Stealth</span>
+        </div>
+        <div class="card-row">
+          <span class="metric-label">Session Time</span>
+          <span class="metric-value" id="duration">00:00:00</span>
+        </div>
+      </div>
+
+      <!-- Shield Protection Feature Pill -->
+      <div class="security-pill">
+        <span>QUIC Bypass:</span>
+        <strong>Active (Instagram / YT)</strong>
+      </div>
+
+      <div class="warn-box" id="warn" style="display:none">
+        Server credentials required. Open <a href="#" id="openOptions">Settings</a>.
+      </div>
     </div>
 
     <script src="popup.js"></script>
